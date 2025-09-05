@@ -1,5 +1,7 @@
 package project.prelim.school.model;
 
+import org.hibernate.annotations.Formula;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +30,9 @@ public class StudentInfo {
 	private String firstname;
 	private String middlename;
 	private String lastname;
+	
+	@Formula("concat(concat(concat(firstname, ' '), coalesce(middlename || ' ', '')), lastname)")
+	private String fullname;
 	
 	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
 	@JoinColumn(name = "data_id")

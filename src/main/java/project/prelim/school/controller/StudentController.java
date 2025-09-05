@@ -1,17 +1,22 @@
 package project.prelim.school.controller;
 
-import org.springframework.http.ResponseEntity;
+import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 
 import project.prelim.school.dto.AddStudentRequest;
 import project.prelim.school.dto.DeleteStudentRequest;
+import project.prelim.school.dto.GetAllStudentResponse;
 import project.prelim.school.service.StudentService;
 
 @RestController @RequiredArgsConstructor
@@ -21,7 +26,7 @@ public class StudentController {
 	private final StudentService studentService;
 	
 	@PostMapping
-	ResponseEntity<Void> addStudent(AddStudentRequest request) {
+	ResponseEntity<Void> addStudent(@RequestBody AddStudentRequest request) {
 		
 		var result = studentService.addStudentRequest(request);
 		
@@ -40,6 +45,12 @@ public class StudentController {
 		case STUDENT_NOT_FOUND -> ResponseEntity.status(404).build();
 		case STUDENT_DELETE_SUCCESS -> ResponseEntity.status(204).build();
 		};
+	}
+	
+	@CrossOrigin(origins = "http://localhost:5173", methods = RequestMethod.GET)
+	@GetMapping
+	ResponseEntity<List<GetAllStudentResponse>> getAllStudent() {
+		return ResponseEntity.ok(studentService.getAllStudentRequest());
 	}
 	
 }

@@ -1,12 +1,15 @@
 package project.prelim.school.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import project.prelim.school.dto.AddStudentRequest;
 import project.prelim.school.dto.DeleteStudentRequest;
+import project.prelim.school.dto.GetAllStudentResponse;
 import project.prelim.school.mapper.StudentMapper;
 import project.prelim.school.model.StudentInfo;
 import project.prelim.school.repo.StudentRepo;
@@ -44,6 +47,15 @@ public class StudentService {
 					return Delete.STUDENT_DELETE_SUCCESS;
 				})
 				.orElse(Delete.STUDENT_NOT_FOUND);
+	}
+	
+	public List<GetAllStudentResponse> getAllStudentRequest() {
+		
+		List<StudentInfo> studs = studentInfoRepo.findAll();
+		
+		return studs.stream()
+		.map(stud -> StudentMapper.INSTANCE.toDTO(stud))
+		.collect(Collectors.toList());
 	}
 
 }

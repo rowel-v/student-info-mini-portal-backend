@@ -1,5 +1,7 @@
 package project.prelim.school.model;
 
+import java.util.Objects;
+
 import org.hibernate.annotations.Formula;
 
 import jakarta.persistence.CascadeType;
@@ -45,6 +47,24 @@ public class StudentInfo {
 		this.middlename = middlename;
 		this.lastname = lastname;
 		this.data = data;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(data, firstname, lastname, middlename);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StudentInfo other = (StudentInfo) obj;
+		return Objects.equals(data, other.data) && Objects.equals(firstname, other.firstname)
+				&& Objects.equals(lastname, other.lastname) && Objects.equals(middlename, other.middlename);
 	}
 	
 	

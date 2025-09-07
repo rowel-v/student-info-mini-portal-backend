@@ -6,6 +6,7 @@ import org.mapstruct.factory.Mappers;
 import project.prelim.school.dto.AddStudentRequest;
 import project.prelim.school.dto.GetAllStudentResponse;
 import project.prelim.school.dto.StudentDataDto;
+import project.prelim.school.dto.UpdateStudentRequest;
 import project.prelim.school.model.StudentData;
 import project.prelim.school.model.StudentInfo;
 
@@ -19,5 +20,7 @@ public interface StudentMapper {
 	StudentInfo toEntity(AddStudentRequest request);
 	
 	GetAllStudentResponse toDTO(StudentInfo student);
+	
+	StudentInfo toEntity(UpdateStudentRequest request);
 
 }

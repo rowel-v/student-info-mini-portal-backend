@@ -1,5 +1,7 @@
 package project.prelim.school.model;
 
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,5 +34,22 @@ public class StudentData {
 		this.course = course;
 		this.year = year;
 		this.address = address;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(address, course, year);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StudentData other = (StudentData) obj;
+		return Objects.equals(address, other.address) && Objects.equals(course, other.course) && year == other.year;
 	}
 }

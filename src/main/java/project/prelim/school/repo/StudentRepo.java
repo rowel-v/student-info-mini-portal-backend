@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface StudentRepo extends JpaRepository<StudentInfo, Integer> {
 	
+	Optional<StudentInfo> findByFullname(String fullname);
 	Optional<StudentInfo> findByFirstnameAndMiddlenameAndLastname(String firstname, String middlename, String lastname);
 	boolean existsByFirstnameAndMiddlenameAndLastname(String firstname, String middlename, String lastname);
 	

@@ -1,4 +1,8 @@
 package project.prelim.school.dto;
 
-public record GetAllStudentResponse(String fullname, StudentDataDto data) {
+public record GetAllStudentResponse(String firstname, 
+		String middlename, 
+		String lastname, 
+		String fullname, 
+		StudentDataDto data) {
 }

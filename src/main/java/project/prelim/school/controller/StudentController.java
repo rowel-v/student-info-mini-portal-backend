@@ -57,6 +57,7 @@ public class StudentController {
 		return ResponseEntity.ok(studentService.getAllStudentRequest());
 	}
 	
+	@CrossOrigin(origins = "http://localhost:5173", methods = RequestMethod.PUT)
 	@PutMapping("{fullname}")
 	ResponseEntity<?> updateStudent(@RequestBody UpdateStudentRequest request, @PathVariable String fullname) {
 		var result = studentService.updateStudentRequest(request, fullname);

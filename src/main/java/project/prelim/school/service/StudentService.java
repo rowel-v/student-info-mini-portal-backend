@@ -63,20 +63,16 @@ public class StudentService {
 		.collect(Collectors.toList());
 	}
 	
-	public StudentResult.Update updateStudentRequest(UpdateStudentRequest req, String studentFullname) {
-		
-		String extractedData[] = studentFullname.split(" ");
-		String firstname = extractedData[0], middlename = extractedData[1], lastname = extractedData[2];
-		
-		return studentInfoRepo.findByFirstnameAndMiddlenameAndLastname(firstname, middlename, lastname)
+	public StudentResult.Update updateStudentRequest(UpdateStudentRequest req, String studentFullname) {		
+		return studentInfoRepo.findByFullname(studentFullname)
 				.map(stud -> {
 					StudentInfo updateReq = StudentMapper.INSTANCE.toEntity(req);
 					
 					if (stud.equals(updateReq)) return Update.STUDENT_DATA_STILL_SAME;
 					
-					stud.setFirstname(req.firstname());
-					stud.setMiddlename(req.middlename());
-					stud.setLastname(req.lastname());
+					stud.setFirstname(updateReq.getFirstname());
+					stud.setMiddlename(updateReq.getMiddlename());
+					stud.setLastname(updateReq.getLastname());
 					stud.setData(updateReq.getData());
 					
 					studentInfoRepo.save(stud);

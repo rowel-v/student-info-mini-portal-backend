@@ -2,8 +2,6 @@ package project.prelim.school.model;
 
 import java.util.Objects;
 
-import org.hibernate.annotations.Formula;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
@@ -33,7 +32,6 @@ public class StudentInfo {
 	private String middlename;
 	private String lastname;
 	
-	@Formula("concat(concat(concat(firstname, ' '), coalesce(middlename || ' ', '')), lastname)")
 	private String fullname;
 	
 	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
@@ -48,7 +46,12 @@ public class StudentInfo {
 		this.lastname = lastname;
 		this.data = data;
 	}
-
+	
+	@PrePersist
+	private void formFullname() {
+		this.fullname = String.format("%s %s %s", firstname, middlename, lastname);
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(data, firstname, lastname, middlename);
@@ -66,6 +69,4 @@ public class StudentInfo {
 		return Objects.equals(data, other.data) && Objects.equals(firstname, other.firstname)
 				&& Objects.equals(lastname, other.lastname) && Objects.equals(middlename, other.middlename);
 	}
-	
-	
 }

@@ -26,10 +26,9 @@ public class StudentService {
 	private final StudentRepo studentInfoRepo;
 
 	public StudentResult.Add addStudentRequest(AddStudentRequest req) {
-
-		String firstname = req.firstname(), middlename = req.middlename(), lastname = req.lastname();
-
-		boolean studentAlreadyExists = studentInfoRepo.existsByFirstnameAndMiddlenameAndLastname(firstname, middlename, lastname);
+		
+		boolean studentAlreadyExists = studentInfoRepo.existsByFirstnameAndMiddlenameAndLastname(
+				req.firstname(), req.middlename(), req.lastname());
 
 		if (studentAlreadyExists) return Add.STUDENT_ALREADY_EXISTS;
 
@@ -40,12 +39,13 @@ public class StudentService {
 
 	public StudentResult.Delete deleteStudentRequest(DeleteStudentRequest req) {
 		
-		String extractedData[] = req.fullname().split(" ");
-		String firstname = extractedData[0], middlename = extractedData[1], lastname = extractedData[2];
-		
 		Optional<StudentInfo> student = studentInfoRepo.findByFirstnameAndMiddlenameAndLastname(
-				firstname, middlename, lastname);
+				req.firstname(), req.middlename(), req.lastname());
 
+		System.out.println(req.firstname());
+		System.out.println(req.middlename());
+		System.out.println(req.lastname());
+		
 		return student
 				.map(stud -> {
 					studentInfoRepo.delete(stud);

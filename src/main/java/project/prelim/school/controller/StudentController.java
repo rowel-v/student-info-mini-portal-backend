@@ -28,6 +28,7 @@ public class StudentController {
 
 	private final StudentService studentService;
 	
+	@CrossOrigin(origins = "http://localhost:5173", methods = RequestMethod.POST)
 	@PostMapping
 	ResponseEntity<Void> addStudent(@RequestBody AddStudentRequest request) {
 		
@@ -42,7 +43,6 @@ public class StudentController {
 	@CrossOrigin(origins = "http://localhost:5173", methods = RequestMethod.DELETE)
 	@DeleteMapping
 	ResponseEntity<Void> deleteStudent(@RequestBody DeleteStudentRequest request) {
-		
 		var result = studentService.deleteStudentRequest(request);
 		
 		return switch (result) {

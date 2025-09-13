@@ -10,4 +10,4 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
-myorigin: "https://rowel-v.github.io/student-info-mini-portal-frontend/"
+myorigin: "https://student-info-mini-portal-frontend/student-info-mini-portal-frontend/"

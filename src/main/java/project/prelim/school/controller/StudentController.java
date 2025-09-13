@@ -28,7 +28,7 @@ public class StudentController {
 
 	private final StudentService studentService;
 	
-	@CrossOrigin(origins = "http://localhost:5173", methods = RequestMethod.POST)
+	@CrossOrigin(origins = {"http://localhost:5173", "${myorigin}"}, methods = RequestMethod.POST)
 	@PostMapping
 	ResponseEntity<Void> addStudent(@RequestBody AddStudentRequest request) {
 		
@@ -40,7 +40,7 @@ public class StudentController {
 		};
 	}
 	
-	@CrossOrigin(origins = "http://localhost:5173", methods = RequestMethod.DELETE)
+	@CrossOrigin(origins = {"http://localhost:5173", "${myorigin}"}, methods = RequestMethod.DELETE)
 	@DeleteMapping
 	ResponseEntity<Void> deleteStudent(@RequestBody DeleteStudentRequest request) {
 		var result = studentService.deleteStudentRequest(request);
@@ -51,13 +51,13 @@ public class StudentController {
 		};
 	}
 	
-	@CrossOrigin(origins = "http://localhost:5173", methods = RequestMethod.GET)
+	@CrossOrigin(origins = {"http://localhost:5173", "${myorigin}"}, methods = RequestMethod.GET)
 	@GetMapping
 	ResponseEntity<List<GetAllStudentResponse>> getAllStudent() {
 		return ResponseEntity.ok(studentService.getAllStudentRequest());
 	}
 	
-	@CrossOrigin(origins = "http://localhost:5173", methods = RequestMethod.PUT)
+	@CrossOrigin(origins = {"http://localhost:5173", "${myorigin}"}, methods = RequestMethod.PUT)
 	@PutMapping("{fullname}")
 	ResponseEntity<?> updateStudent(@RequestBody UpdateStudentRequest request, @PathVariable String fullname) {
 		var result = studentService.updateStudentRequest(request, fullname);

@@ -3,7 +3,6 @@ package project.prelim.school.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +26,6 @@ public class StudentController {
 
 	private final StudentService studentService;
 	
-	@CrossOrigin(origins = {"http://localhost:5173", "${myorigin}"}, methods = RequestMethod.POST)
 	@PostMapping
 	ResponseEntity<Void> addStudent(@RequestBody AddStudentRequest request) {
 		
@@ -40,7 +37,6 @@ public class StudentController {
 		};
 	}
 	
-	@CrossOrigin(origins = {"http://localhost:5173", "${myorigin}"}, methods = RequestMethod.DELETE)
 	@DeleteMapping
 	ResponseEntity<Void> deleteStudent(@RequestBody DeleteStudentRequest request) {
 		var result = studentService.deleteStudentRequest(request);
@@ -48,16 +44,14 @@ public class StudentController {
 		return switch (result) {
 		case STUDENT_NOT_FOUND -> ResponseEntity.status(404).build();
 		case STUDENT_DELETE_SUCCESS -> ResponseEntity.status(204).build();
-		};
+		};	
 	}
 	
-	@CrossOrigin(origins = {"http://localhost:5173", "${myorigin}"}, methods = RequestMethod.GET)
 	@GetMapping
 	ResponseEntity<List<GetAllStudentResponse>> getAllStudent() {
 		return ResponseEntity.ok(studentService.getAllStudentRequest());
 	}
 	
-	@CrossOrigin(origins = {"http://localhost:5173", "${myorigin}"}, methods = RequestMethod.PUT)
 	@PutMapping("{fullname}")
 	ResponseEntity<?> updateStudent(@RequestBody UpdateStudentRequest request, @PathVariable String fullname) {
 		var result = studentService.updateStudentRequest(request, fullname);
